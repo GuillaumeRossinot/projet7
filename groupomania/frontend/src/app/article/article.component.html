@@ -1,0 +1,25 @@
+<div class="col-md-6">
+    <div *ngIf="currentArticle">
+        <h4>Article</h4>
+        <div>
+            <label><strong>Title:</strong></label> {{ currentArticle.title }}
+        </div>
+        <div>
+            <label><strong>Description:</strong></label>
+            {{ currentArticle.description }}
+        </div>
+        <div>
+            <label><strong>Image:</strong></label>
+            {{ currentArticle.image }}
+        </div>
+
+        <a class="badge badge-warning" routerLink="/post/{{ currentArticle.id }}">
+            Edit
+        </a>
+    </div>
+
+    <div *ngIf="!currentArticle">
+        <br />
+        <p>Please click on a Article...</p>
+    </div>
+</div>

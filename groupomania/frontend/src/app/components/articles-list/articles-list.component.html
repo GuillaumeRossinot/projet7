@@ -1,0 +1,52 @@
+<div class="list row">
+  <div class="col-md-8">
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" placeholder="Search by title" [(ngModel)]="title" />
+      <div class="input-group-append">
+        <button class="btn btn-outline-secondary" type="button" (click)="searchTitle()">
+          Search
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <h4>Articles List</h4>
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let article of articles; let i = index" [class.active]="i == currentIndex"
+        (click)="goToArticle(article.id)">
+        {{ article.title }}
+      </li>
+    </ul>
+
+    <!--
+        [class.active]="i == currentIndex" (click)="setActiveArticle(article, i)" -->
+    <!-- <button class="m-3 btn btn-sm btn-danger" (click)="removeAllArticles()">
+      Remove All
+    </button>
+  </div>
+  <div class="col-md-6">
+    <div *ngIf="currentArticle">
+      <h4>Article</h4>
+      <div>
+        <label><strong>Title:</strong></label> {{ currentArticle.title }}
+      </div>
+      <div>
+        <label><strong>Description:</strong></label>
+        {{ currentArticle.description }}
+      </div>
+      <div>
+        <label><strong>Image:</strong></label>
+        {{ currentArticle.image }}
+      </div>
+
+      <a class="badge badge-warning" routerLink="/post/{{ currentArticle.id }}">
+        Edit
+      </a>
+    </div> -->
+
+    <div *ngIf="!currentArticle">
+      <br />
+      <p>Please click on a Article...</p>
+    </div>
+  </div>
+</div>

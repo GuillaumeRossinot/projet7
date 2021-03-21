@@ -1,0 +1,62 @@
+<!-- <div>
+  <div *ngIf="currentArticle.id" class="edit-form">
+    <h4>Article</h4>
+    <form>
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" class="form-control" id="title" [(ngModel)]="currentArticle.title" name="title" />
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <input type="text" class="form-control" id="description" [(ngModel)]="currentArticle.description"
+          name="description" />
+      </div>
+
+      <div class="form-group">
+        <label for="image">Image</label>
+        <input type="text" class="form-control" id="image" [(ngModel)]="currentArticle.image" name="image" />
+      </div>
+
+      <button class="badge badge-danger mr-2" (click)="deleteArticle()">
+        Delete
+      </button>
+
+      <button type="submit" class="badge badge-success mb-2" (click)="updateArticle()">
+        Update
+      </button>
+      <p>{{ message }}</p>
+
+
+      <div *ngIf="!currentArticle.id">
+        <br />
+        <p>Cannot access this Article...</p>
+      </div> -->
+
+<div class="col-md-6">
+  <div *ngIf="currentArticle">
+    <h4>Article</h4>
+    <div>
+      <label><strong>Title:</strong></label> {{ currentArticle.title }}
+    </div>
+    <div>
+      <label><strong>Description:</strong></label>
+      {{ currentArticle.description }}
+    </div>
+    <div>
+      <label><strong>Image:</strong></label>
+      {{ currentArticle.image }}
+    </div>
+
+    <a class="badge badge-warning" *ngIf="isLoggedIn" routerLink="/post/{{ currentArticle.id }}">
+      Edit
+    </a>
+  </div>
+
+  <!-- <div class="col-md-6">
+    <div *ngFor="let commentaire of comment; let i = index">
+      <h4>Commentaire</h4>
+      <div>
+        <label><strong>Commentaire :</strong></label>
+        {{ currentArticle.text }} 
+</div>-->
+</div>
