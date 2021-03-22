@@ -3,7 +3,9 @@ import { TokenStorageService } from 'src/app/_services/token-storage.service';
 import { ArticleService } from 'src/app/services/article.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Article } from 'src/app/models/article.model';
-//import { Comment } from 'src/app/models/comment.model';
+import { Comment } from 'src/app/models/comment.model';
+import { DomSanitizer } from '@angular/platform-browser';
+import { any } from 'sequelize/types/lib/operators';
 
 @Component({
   selector: 'app-article-details',
@@ -12,23 +14,42 @@ import { Article } from 'src/app/models/article.model';
 })
 export class ArticleDetailsComponent implements OnInit {
   isLoggedIn = false;
+  isAdmin = false;
   currentArticle: Article = {
     title: '',
     description: '',
-    image: ''
+    image: '',
+    imageEncoded: '',
+    comment: '',
+    user: ''
   };
   message = '';
+  imagePost: any;
+  userId = '';
+  comment: Comment = {
+    text: ''
+  };
+  submitted = false;
+
 
   constructor(
     private ArticleService: ArticleService,
     private route: ActivatedRoute,
     private router: Router,
-    private tokenStorageService: TokenStorageService) { }
+    private tokenStorageService: TokenStorageService,
+    private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
+    this.userId = this.tokenStorageService.getUser().id;
+    this.isAdmin = this.tokenStorageService.getUser().isAdmin;
+    console.log("this.isAdmin = this.tokenStorageService.getUser().isAdmin; " + this.tokenStorageService.getUser().isAdmin);
     this.message = '';
     this.getArticle(this.route.snapshot.params.id);
+  }
+
+  delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   getArticle(id: string): void {
@@ -37,26 +58,10 @@ export class ArticleDetailsComponent implements OnInit {
       .subscribe(
         data => {
           this.currentArticle = data;
+          console.log("this.currentArticle " + JSON.stringify(this.currentArticle));
           console.log(data);
-        },
-        error => {
-          console.log(error);
-        });
-  }
-
-  updateArticle(): void {
-    const data = {
-      title: this.currentArticle.title,
-      description: this.currentArticle.description,
-      image: this.currentArticle.image
-    };
-    this.message = '';
-
-    this.ArticleService.update(this.currentArticle.id, this.currentArticle)
-      .subscribe(
-        response => {
-          console.log(response);
-          this.message = response.message ? response.message : 'This article was updated successfully!';
+          this.imagePost = this.sanitizer.bypassSecurityTrustResourceUrl(`data:image/png;base64, ${this.currentArticle.imageEncoded}`);
+          console.log("imagePost" + this.imagePost);
         },
         error => {
           console.log(error);
@@ -68,10 +73,52 @@ export class ArticleDetailsComponent implements OnInit {
       .subscribe(
         response => {
           console.log(response);
-          this.router.navigate(['/articles']);
+          this.router.navigate(['/post']);
         },
         error => {
           console.log(error);
         });
   }
+
+  saveComment(): void {
+    const data = {
+      text: this.comment.text,
+      postId: this.currentArticle.id
+    };
+
+    this.ArticleService.createComment(data)
+      .subscribe(
+        response => {
+          console.log(response);
+          console.log("id" + response.id);
+          this.submitted = true;
+          this.redirectArticle();
+        },
+        error => {
+          console.log(error);
+        });
+  }
+
+  deleteComment(commentId: string): void {
+    this.ArticleService.deleteComment(commentId)
+      .subscribe(
+        response => {
+          console.log(response);
+          this.redirectArticle();
+        },
+        error => {
+          console.log(error);
+        });
+  }
+
+  redirectArticle(): void {
+    (async () => {
+
+      await this.delay(1000);
+      window.location.href = "/post/" + this.currentArticle.id;
+
+    })();
+  }
+
+
 }

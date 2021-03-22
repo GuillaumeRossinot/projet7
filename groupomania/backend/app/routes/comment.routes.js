@@ -1,10 +1,12 @@
+const { authJwt } = require("../middleware");
+
 module.exports = app => {
     const comments = require("../controllers/comment.controller.js");
 
     var router = require("express").Router();
 
     // Create a new Tutorial
-    router.post("/", comments.createComment);
+    router.post("/", [authJwt.verifyToken], comments.createComment);
 
     // Update un commentaire
     router.put("/:id", comments.update);

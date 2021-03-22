@@ -79,18 +79,13 @@ exports.signin = (req, res) => {
       var token = jwt.sign({ id: user.id }, config.secret, {
         expiresIn: '1d' // 24 hours
       });
-
-      /*             var authorities = [];
-                  user.getRoles().then(roles => {
-                      for (let i = 0; i < roles.length; i++) {
-                          authorities.push("Utilisateur admin");
-                      }*/
       res.status(200).send({
         id: user.id,
         nom: user.nom,
         prenom: user.prenom,
         email: user.email,
-        accessToken: token
+        accessToken: token,
+        isAdmin: user.isAdmin
       });
       // }); 
     })

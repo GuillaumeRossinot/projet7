@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ArticlesListComponent } from './components/articles-list/articles-list.component';
 import { ArticleDetailsComponent } from './components/article-details/article-details.component';
 import { AddArticleComponent } from './components/add-article/add-article.component';
+import { EditArticleComponent } from './components/edit-article/edit-article.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 // import { HomeComponent } from './home/home.component';
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'post', pathMatch: 'full' },
   { path: 'post', component: ArticlesListComponent },
   { path: 'post/:id', component: ArticleDetailsComponent },
+  { path: 'post/edit/:id', component: EditArticleComponent },
   { path: 'add', component: AddArticleComponent },
   // { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },

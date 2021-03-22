@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Article } from '../models/article.model';
 
 const baseUrl = 'http://localhost:8080/api/post';
+const commentUrl = 'http://localhost:8080/api';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -43,5 +44,19 @@ export class ArticleService {
 
   findByTitle(title: any): Observable<Article[]> {
     return this.http.get<Article[]>(`${baseUrl}?title=${title}`);
+  }
+
+  getImage(id: any): Observable<Article> {
+    console.log(`${baseUrl}/files/${id}`);
+    return this.http.get(`${baseUrl}/files/${id}`);
+  }
+
+  createComment(data: any): Observable<any> {
+    //return this.http.post(baseUrl, data);
+    return this.http.post(`${commentUrl}/comments/`, data);
+  }
+
+  deleteComment(id: any): Observable<any> {
+    return this.http.delete(`${commentUrl}/comments/${id}`);
   }
 }

@@ -4,11 +4,6 @@
             Profile
         </h3>
     </header>
-    <!--     <p>
-        <strong>Token:</strong>
-        {{ currentUser.accessToken.substring(0, 20) }} ...
-        {{ currentUser.accessToken.substr(currentUser.accessToken.length - 20) }}
-    </p> -->
     <p>
         <strong>Nom:</strong>
         {{ currentUser.nom }}
@@ -21,12 +16,11 @@
         <strong>Email:</strong>
         {{ currentUser.email }}
     </p>
-    <!--     <strong>Roles:</strong>
-    <ul>
-        <li *ngFor="let role of currentUser.roles">
-            {{ role }}
-        </li>
-    </ul> -->
+    <div *ngIf="currentUser">
+        <button class="badge badge-danger mr-2" *ngIf="isLoggedIn || isAdmin" (click)="deleteUser()">
+            Delete
+        </button>
+    </div>
 </div>
 
 <ng-template #loggedOut>

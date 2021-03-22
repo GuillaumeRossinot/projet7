@@ -13,7 +13,7 @@ exports.createComment = (req, res) => {
     const comment = {
         text: req.body.text,
         postId: req.body.postId,
-        userId: req.body.userId
+        userId: req.userId
     };
 
     Comment.create(comment)

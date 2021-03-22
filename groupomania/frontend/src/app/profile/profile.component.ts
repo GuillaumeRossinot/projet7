@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TokenStorageService } from '../_services/token-storage.service';
+import { UserService } from 'src/app/services/user.service';
+import { Router } from '@angular/router';
+import { User } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-profile',
@@ -7,12 +10,40 @@ import { TokenStorageService } from '../_services/token-storage.service';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  currentUser: any;
+  //currentUser: any;
+  isLoggedIn = false;
+  isAdmin = false;
+  currentUser: User = {
+    nom: '',
+    prenom: '',
+    email: '',
+    password: ''
+  };
 
-  constructor(private token: TokenStorageService) { }
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private tokenStorageService: TokenStorageService) { }
 
   ngOnInit(): void {
-    this.currentUser = this.token.getUser();
+    this.currentUser = this.tokenStorageService.getUser();
   }
-}
 
+  modifyUser(): void {
+
+  }
+
+  deleteUser(): void {
+    this.userService.deleteUser(this.currentUser.id)
+      .subscribe(
+        response => {
+          console.log(response);
+          this.router.navigate(['/post']);
+        },
+        error => {
+          console.log(error);
+        });
+  }
+
+
+}

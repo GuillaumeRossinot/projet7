@@ -1,8 +1,14 @@
 const db = require("../models");
+const fs = require("fs");
+const directoryPath = __basedir + "/resources/static/assets/uploads/";
 const Post = db.post;
 const Comment = db.comments;
 const User = db.users;
 const Op = db.Sequelize.Op;
+var FileReader = require('filereader');
+const { deleteFile } = require("./file.controller");
+
+
 
 // Créer un nouvel article
 exports.createPost = (req, res) => {
@@ -15,11 +21,23 @@ exports.createPost = (req, res) => {
     }
     console.log("userId" + req.userId);
 
+
+    var fichierSplit = req.body.image.split("\\");
+    console.log("fichiersplit " + fichierSplit[fichierSplit.length - 1]);
+    /* var bitmap = fs.readFileSync(directoryPath + fichierSplit[fichierSplit.length - 1]);
+ 
+     // Remove the non-standard characters
+     var tmp = bitmap.toString().replace(/[“”‘’]/g, '');
+ 
+     // Create a buffer from the string and return the results
+     var imageEncoded = new Buffer(tmp).toString('base64'); */
+
     // Création de l'article
     const post = {
         title: req.body.title,
         description: req.body.description,
-        image: req.body.image,
+        image: 'image',
+        imageEncoded: '',
         userId: req.userId
     };
 
@@ -60,13 +78,17 @@ exports.findOne = (req, res) => {
     console.log("token " + token);
     const id = req.params.id;
 
-    Post.findByPk(id, { include: ["comment"] })
+
+    Post.findByPk(id, { include: ["comment", "user"] })
         .then(data => {
+            console.log("comment " + data.userId);
+            const profilePicture = Buffer.from(data.imageEncoded).toString('base64');
+            data.imageEncoded = profilePicture;
             res.send(data);
         })
         .catch(err => {
             res.status(500).send({
-                message: "Impossible de trouver l'article avec l'id=" + id
+                message: "Impossible de trouver l'article avec l'id=" + id + "." + err
             });
         });
 };
@@ -98,29 +120,38 @@ exports.update = (req, res) => {
 
 // Supprimer un article grâce a son ID
 exports.delete = (req, res) => {
-    const id = req.params.id;
-    const postId = id;
+    const postId = req.params.id;
 
     Comment.destroy({
         where: { postId: postId }
     })
     Post.destroy({
-        where: { id: id }
+        where: { id: postId }
     })
         .then(num => {
             if (num == 1) {
+                const fileName = __basedir + "/resources/static/assets/uploads/" + postId + "-image";
+
+                fs.unlink(fileName, (err) => {
+                    if (err) {
+                        console.error(err)
+                        return
+                    }
+
+                    //file removed
+                })
                 res.send({
                     message: "L'article a été supprimer !"
                 });
             } else {
                 res.send({
-                    message: `Impossible de supprimer l'article avec l'id=${id}.`
+                    message: `Impossible de supprimer l'article avec l'id=${postId}.`
                 });
             }
         })
         .catch(err => {
             res.status(500).send({
-                message: "Impossible de supprimer l'article id=" + id
+                message: "Impossible de supprimer l'article id=" + postId
             });
         });
 };

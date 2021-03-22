@@ -4,4 +4,7 @@ export class Article {
     description?: string;
     image?: string;
     userId?: number;
+    imageEncoded?: string;
+    comment?: any;
+    user?: any;
 }

@@ -23,7 +23,10 @@
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "file-api": "^0.10.4",
+    "file-reader": "^1.1.1",
     "jsonwebtoken": "^8.5.1",
+    "multer": "^1.4.2",
     "mysql2": "^2.2.5",
     "sequelize": "^5.22.4"
   }

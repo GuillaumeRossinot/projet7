@@ -1,0 +1,53 @@
+<div>
+    <div *ngIf="currentArticle.id" class="edit-form">
+        <h4>Article</h4>
+        <form>
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" class="form-control" id="title" [(ngModel)]="currentArticle.title" name="title" />
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <input type="text" class="form-control" id="description" [(ngModel)]="currentArticle.description"
+                    name="description" />
+            </div>
+
+            <div class="form-group">
+                <label for="description">image</label>
+                <img [src]="imagePost">
+            </div>
+
+            <div class="row">
+                <div class="col-8">
+                    <label class="btn btn-default p-0">
+                        <input type="file" multiple (change)="selectFile($event)" required [(ngModel)]="article.image"
+                            [ngModelOptions]="{standalone: true}" (click)="updateImage()" />
+                    </label>
+                </div>
+            </div>
+
+            <div *ngIf="currentFile" class="progress my-3">
+                <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar"
+                    attr.aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100"
+                    [ngStyle]="{ width: progress + '%' }">
+                    {{ progress }}%
+                </div>
+            </div>
+
+        </form>
+
+        <button class="badge badge-danger mr-2" (click)="deleteArticle()">
+            Delete
+        </button>
+
+        <button type="submit" class="badge badge-success mb-2" (click)="updateArticle()">
+            Update
+        </button>
+        <p>{{ message }}</p>
+    </div>
+
+    <div *ngIf="!currentArticle.id">
+        <br />
+        <p>Cannot access this Article...</p>
+    </div>
+</div>

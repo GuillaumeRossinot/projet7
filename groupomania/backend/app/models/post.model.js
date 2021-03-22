@@ -8,6 +8,9 @@ module.exports = (sequelize, Sequelize) => {
         },
         image: {
             type: Sequelize.STRING
+        },
+        imageEncoded: {
+            type: Sequelize.BLOB('long')
         }
     });
 
