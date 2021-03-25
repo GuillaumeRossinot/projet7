@@ -16,8 +16,8 @@
         <strong>Email:</strong>
         {{ currentUser.email }}
     </p>
-    <div *ngIf="currentUser">
-        <button class="badge badge-danger mr-2" *ngIf="isLoggedIn || isAdmin" (click)="deleteUser()">
+    <div *ngIf="isLoggedIn || isAdmin ||currentUser">
+        <button class="badge badge-danger mr-2" (click)="deleteUser()">
             Delete
         </button>
     </div>

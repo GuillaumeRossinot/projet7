@@ -65,3 +65,42 @@ exports.getInfos = (req, res) => {
             });
         });
 };
+
+exports.delete = (req, res) => {
+    const userId = req.params.id;
+
+    User.destroy({
+        where: { id: userId }
+    })
+        .then(num => {
+            if (num == 1) {
+                res.send({
+                    message: "L'user a été supprimer !"
+                });
+            } else {
+                res.send({
+                    message: `Impossible de supprimer l'article avec l'id=${id}.`
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Impossible de supprimer l'article id=" + id
+            });
+        });
+};
+
+exports.getAllUsers = (req, res) => {
+    const id = req.params.id;
+
+    User.findAll(id)
+        .then(data => {
+            console.log("data " + data);
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Impossible de trouver l'utilisateur avec l'id=" + id
+            });
+        });
+};

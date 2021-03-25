@@ -8,7 +8,20 @@ const Op = db.Sequelize.Op;
 var FileReader = require('filereader');
 const { deleteFile } = require("./file.controller");
 
+const getPagination = (page, size) => {
+    const limit = size ? +size : 3;
+    const offset = page ? page * limit : 0;
 
+    return { limit, offset };
+};
+
+const getPagingData = (data, page, limit) => {
+    const { count: totalItems, rows: posts } = data;
+    const currentPage = page ? +page : 0;
+    const totalPages = Math.ceil(totalItems / limit);
+
+    return { totalItems, posts, totalPages, currentPage };
+};
 
 // Créer un nouvel article
 exports.createPost = (req, res) => {
@@ -24,13 +37,6 @@ exports.createPost = (req, res) => {
 
     var fichierSplit = req.body.image.split("\\");
     console.log("fichiersplit " + fichierSplit[fichierSplit.length - 1]);
-    /* var bitmap = fs.readFileSync(directoryPath + fichierSplit[fichierSplit.length - 1]);
- 
-     // Remove the non-standard characters
-     var tmp = bitmap.toString().replace(/[“”‘’]/g, '');
- 
-     // Create a buffer from the string and return the results
-     var imageEncoded = new Buffer(tmp).toString('base64'); */
 
     // Création de l'article
     const post = {
@@ -56,12 +62,23 @@ exports.createPost = (req, res) => {
 
 // Afficher tout les articles
 exports.findAll = (req, res) => {
+    const { page, size } = req.query;
     const title = req.query.title;
     var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
-    Post.findAll({ where: condition })
+    const { limit, offset } = getPagination(page, size);
+
+    Post.findAndCountAll({ where: condition, limit, offset })
         .then(data => {
-            res.send(data);
+            //console.log("profilePicture " + JSON.stringify(data.rows[0]));
+            data.rows.forEach(element => {
+                var profilePicture = Buffer.from(element.imageEncoded).toString('base64');
+                element.imageEncoded = profilePicture;
+            });
+            //console.log("profilePicture2 " + JSON.stringify(data.rows[0]));
+            const response = getPagingData(data, page, limit);
+
+            res.send(response);
         })
         .catch(err => {
             res.status(500).send({
@@ -79,7 +96,7 @@ exports.findOne = (req, res) => {
     const id = req.params.id;
 
 
-    Post.findByPk(id, { include: ["comment", "user"] })
+    Post.findByPk(id, { include: [{ all: true, nested: true }] })
         .then(data => {
             console.log("comment " + data.userId);
             const profilePicture = Buffer.from(data.imageEncoded).toString('base64');

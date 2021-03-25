@@ -19,6 +19,12 @@ module.exports = function (app) {
         controller.getInfos
     );
 
+    app.get(
+        "/api/getUser/",
+        [authJwt.verifyToken],
+        controller.getAllUsers
+    );
+
     app.post(
         "/api/auth/signup",
         [
@@ -27,11 +33,12 @@ module.exports = function (app) {
         authController.signup
     );
 
+    app.delete(
+        "/api/user/:id",
+        [authJwt.verifyToken],
+        controller.delete
+    );
+
     app.post("/api/auth/signin", authController.signin);
 
-    /* app.get(
-        "/api/test/admin",
-        [authJwt.verifyToken, authJwt.isAdmin],
-        controller.adminBoard
-    ); */
 };

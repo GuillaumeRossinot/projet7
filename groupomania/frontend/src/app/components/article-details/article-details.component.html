@@ -1,47 +1,63 @@
-<div class="col-md-6">
-  <div *ngIf="currentArticle">
-    <h4>Article</h4>
-    <div>
-      <label><strong>Title:</strong></label> {{ currentArticle.title }}
-    </div>
-    <div>
-      <label><strong>Description:</strong></label>
-      {{ currentArticle.description }}
-    </div>
-    <div>
-      <label><strong>Image:</strong></label>
-      <img [src]="imagePost">
-    </div>
-
-    <div *ngIf="this.currentArticle.user">
-      <div>
-        <label><strong>Poster par:</strong></label>
-        {{ this.currentArticle.user.nom }} {{ this.currentArticle.user.prenom }}
+<div class="row">
+  <div class="col-md-6">
+    <div *ngIf="currentArticle">
+      <h4>Article :</h4>
+      <div class="row" id="detail">
+        <div class="col-sm-4">
+          <div class="image">
+            <label><strong>Image:</strong></label>
+            <img [src]="imagePost">
+          </div>
+        </div>
+        <div class="col-sm-8 mr-auto">
+          <div class="col-sm-4 mr-auto" id="titre">
+            <label><strong>Title:</strong></label>
+            {{ currentArticle.title }}
+          </div>
+          <br />
+          <div class="col-sm-4 mr-auto" id="descriptiono">
+            <label><strong>Description:</strong></label><br />
+            {{ currentArticle.description }}
+          </div>
+        </div>
       </div>
     </div>
 
-    <a class="badge badge-warning" *ngIf="(isLoggedIn && this.currentArticle.user.id == userId) || isAdmin"
-      routerLink="/post/edit/{{ currentArticle.id }}">
-      Edit
-    </a>
-    <button class="badge badge-danger mr-2" *ngIf="(isLoggedIn && this.currentArticle.user.id == userId) || isAdmin"
-      (click)="deleteArticle()">
-      Delete
-    </button>
-  </div>
+    <div *ngIf="currentArticle.user" class="infopost">
+      <div>
+        <label><strong>Poster par:</strong></label>
+        {{ currentArticle.user.nom }} {{ currentArticle.user.prenom }}
+      </div>
+      <a class="badge badge-warning"
+        *ngIf="(isLoggedIn && currentArticle.user != null && currentArticle.user.id == userId) || isAdmin"
+        routerLink="/post/edit/{{ currentArticle.id }}">
+        Edit
+      </a>
+      <button class="badge badge-danger mr-2"
+        *ngIf="(isLoggedIn && currentArticle.user != null && currentArticle.user.id == userId) || isAdmin"
+        (click)="deleteArticle()">
+        Delete
+      </button>
+    </div>
 
-  <div *ngIf="currentArticle.comment">
-    <div class="col-md-6">
-      <h4>Commentaire</h4>
-      <div *ngFor="let commentaire of currentArticle.comment; let i = index">
-        <div>
-          <label><strong>Commentaire :</strong></label>
-          {{ commentaire.text }}
+
+
+    <div *ngIf="currentArticle.comment" id="comment">
+      <div class="col-md-6">
+        <h4>Commentaire :</h4>
+        <div *ngFor="let commentaire of currentArticle.comment; let i = index" class="comments">
+          <div>
+            {{ commentaire.text }}
+          </div>
+          <button class="badge badge-danger mr-2" *ngIf="(isLoggedIn && commentaire.userId == userId) || isAdmin"
+            (click)="deleteComment(commentaire.id)">
+            Delete
+          </button>
+          <div>
+            <label><strong>Poster par:</strong></label>
+            {{ commentaire.users_comment_id.nom }} {{ commentaire.users_comment_id.prenom }}
+          </div>
         </div>
-        <button class="badge badge-danger mr-2" *ngIf="(isLoggedIn && commentaire.userId == userId) || isAdmin"
-          (click)="deleteComment(commentaire.id)">
-          Delete
-        </button>
       </div>
     </div>
   </div>

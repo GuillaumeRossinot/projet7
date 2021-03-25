@@ -26,14 +26,12 @@ verifyToken = (req, res, next) => {
     });
 };
 
-/* isAdmin = (req, res, next) => {
+isAdmin = (req, res, next) => {
     User.findByPk(req.userId).then(user => {
         user.getRoles().then(roles => {
-            for (let i = 0; i < roles.length; i++) {
-                if (roles[i] === 1) {
-                    next();
-                    return;
-                }
+            if (roles === 1) {
+                next();
+                return;
             }
 
             res.status(403).send({
@@ -41,11 +39,11 @@ verifyToken = (req, res, next) => {
             });
             return;
         });
-    }); 
-};*/
+    });
+};
 
 const authJwt = {
-    verifyToken: verifyToken
-    // isAdmin: isAdmin
+    verifyToken: verifyToken,
+    isAdmin: isAdmin
 };
 module.exports = authJwt;

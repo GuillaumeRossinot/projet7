@@ -3,3 +3,8 @@
   max-width: 750px;
   margin: auto;
 }
+
+img{
+  max-height: 100px;
+  max-width: 100px;
+}

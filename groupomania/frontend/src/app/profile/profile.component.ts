@@ -29,8 +29,13 @@ export class ProfileComponent implements OnInit {
     this.currentUser = this.tokenStorageService.getUser();
   }
 
-  modifyUser(): void {
+  delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 
+  logout(): void {
+    this.tokenStorageService.signOut();
+    this.redirectAccueil();
   }
 
   deleteUser(): void {
@@ -38,12 +43,21 @@ export class ProfileComponent implements OnInit {
       .subscribe(
         response => {
           console.log(response);
-          this.router.navigate(['/post']);
+          this.logout();
         },
         error => {
           console.log(error);
         });
   }
 
+  redirectAccueil(): void {
+    (async () => {
 
+      await this.delay(1000);
+      window.location.href = "/";
+
+    })();
+
+
+  }
 }

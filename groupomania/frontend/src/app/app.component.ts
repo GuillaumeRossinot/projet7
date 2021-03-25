@@ -8,9 +8,9 @@ import { TokenStorageService } from './_services/token-storage.service';
 })
 
 export class AppComponent implements OnInit {
-  private roles: string[] = [];
   isLoggedIn = false;
   showAdminBoard = false;
+  isAdmin = false;
   email?: string;
   nom?: string;
   prenom?: string;
@@ -20,12 +20,12 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
+    this.isAdmin = this.tokenStorageService.getUser().isAdmin;
 
     if (this.isLoggedIn) {
       const user = this.tokenStorageService.getUser();
-      this.roles = user.roles;
 
-      //this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
+      this.showAdminBoard = user.isAdmin;
 
       this.email = user.email;
       this.nom = user.nom;

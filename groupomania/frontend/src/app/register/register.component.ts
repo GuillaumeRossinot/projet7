@@ -22,6 +22,10 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
   onSubmit(): void {
     const { nom, prenom, email, password } = this.form;
 
@@ -30,11 +34,21 @@ export class RegisterComponent implements OnInit {
         console.log(data);
         this.isSuccessful = true;
         this.isSignUpFailed = false;
+        this.redirectAccueil();
       },
       err => {
         this.errorMessage = err.error.message;
         this.isSignUpFailed = true;
       }
     );
+  }
+
+  redirectAccueil(): void {
+    (async () => {
+
+      await this.delay(1000);
+      window.location.href = "/";
+
+    })();
   }
 }

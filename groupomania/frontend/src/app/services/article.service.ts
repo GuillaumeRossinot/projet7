@@ -18,8 +18,8 @@ export class ArticleService {
 
   constructor(private http: HttpClient) { }
 
-  getAll(): Observable<Article[]> {
-    return this.http.get<Article[]>(baseUrl);
+  getAll(params: any): Observable<any> {
+    return this.http.get<any>(baseUrl, { params });
   }
 
   get(id: any): Observable<Article> {

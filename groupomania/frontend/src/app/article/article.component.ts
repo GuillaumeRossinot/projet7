@@ -8,10 +8,15 @@ import { ArticleService } from 'src/app/services/article.service';
   styleUrls: ['./article.component.css']
 })
 export class ArticleComponent implements OnInit {
-  articles?: Article[];
+  articles: Article[] = [];
   currentArticle?: Article;
   currentIndex = -1;
   title = '';
+
+  page = 1;
+  count = 0;
+  pageSize = 3;
+  pageSizes = [3, 6, 9];
 
   constructor(private articleService: ArticleService) { }
 
@@ -19,10 +24,30 @@ export class ArticleComponent implements OnInit {
     this.retrieveArticles();
   }
 
+  getRequestParams(searchTitle: string, page: number, pageSize: number): any {
+    // tslint:disable-next-line:prefer-const
+    let params: any = {};
+
+    if (searchTitle) {
+      params[`title`] = searchTitle;
+    }
+
+    if (page) {
+      params[`page`] = page - 1;
+    }
+
+    if (pageSize) {
+      params[`size`] = pageSize;
+    }
+
+    return params;
+  }
+
   retrieveArticles(): void {
+    const params = this.getRequestParams(this.title, this.page, this.pageSize);
     console.log("içi");
     debugger;
-    this.articleService.getAll()
+    this.articleService.getAll(params)
       .subscribe(
         data => {
           this.articles = data;

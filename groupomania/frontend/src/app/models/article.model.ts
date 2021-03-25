@@ -5,6 +5,7 @@ export class Article {
     image?: string;
     userId?: number;
     imageEncoded?: string;
+    imageEncoded2?: any;
     comment?: any;
     user?: any;
 }
