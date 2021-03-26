@@ -1,77 +1,135 @@
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-10 ml-auto mr-auto" id="article">
     <div *ngIf="currentArticle">
       <h4>Article :</h4>
-      <div class="row" id="detail">
-        <div class="col-sm-4">
-          <div class="image">
+      <div class="card mb-3">
+        <div class="row g-0">
+          <div class="col-md-4">
             <label><strong>Image:</strong></label>
             <img [src]="imagePost">
           </div>
-        </div>
-        <div class="col-sm-8 mr-auto">
-          <div class="col-sm-4 mr-auto" id="titre">
-            <label><strong>Title:</strong></label>
-            {{ currentArticle.title }}
-          </div>
-          <br />
-          <div class="col-sm-4 mr-auto" id="descriptiono">
-            <label><strong>Description:</strong></label><br />
-            {{ currentArticle.description }}
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title"> <label><strong>Title:</strong></label>
+                {{ currentArticle.title }}
+                <br />
+              </h5>
+              <p class="card-text"><strong>titre :</strong> {{ currentArticle.title }} <br />
+                <label><strong>Description:</strong></label><br />
+                {{ currentArticle.description }}
+              </p>
+              <p class="card-text"><small class="text-muted">
+                  <div *ngIf="currentArticle.user" class="infopost">
+                    <div>
+                      <label><strong>Poster par:</strong></label>
+                      {{ currentArticle.user.nom }} {{ currentArticle.user.prenom }}
+                    </div>
+                    <a class="badge badge-warning"
+                      *ngIf="(isLoggedIn && currentArticle.user != null && currentArticle.user.id == userId) || isAdmin"
+                      routerLink="/post/edit/{{ currentArticle.id }}">
+                      Edit
+                    </a>
+                    <button class="badge badge-danger mr-2"
+                      *ngIf="(isLoggedIn && currentArticle.user != null && currentArticle.user.id == userId) || isAdmin"
+                      (click)="deleteArticle()">
+                      Delete
+                    </button>
+                  </div>
+                </small></p>
+            </div>
           </div>
         </div>
       </div>
     </div>
-
-    <div *ngIf="currentArticle.user" class="infopost">
-      <div>
-        <label><strong>Poster par:</strong></label>
-        {{ currentArticle.user.nom }} {{ currentArticle.user.prenom }}
-      </div>
-      <a class="badge badge-warning"
-        *ngIf="(isLoggedIn && currentArticle.user != null && currentArticle.user.id == userId) || isAdmin"
-        routerLink="/post/edit/{{ currentArticle.id }}">
-        Edit
-      </a>
-      <button class="badge badge-danger mr-2"
-        *ngIf="(isLoggedIn && currentArticle.user != null && currentArticle.user.id == userId) || isAdmin"
-        (click)="deleteArticle()">
-        Delete
-      </button>
-    </div>
-
-
-
-    <div *ngIf="currentArticle.comment" id="comment">
-      <div class="col-md-6">
+    <div *ngIf="currentArticle.comment">
+      <div class="col-md-12 ">
         <h4>Commentaire :</h4>
-        <div *ngFor="let commentaire of currentArticle.comment; let i = index" class="comments">
-          <div>
-            {{ commentaire.text }}
+        <div *ngFor="let commentaire of currentArticle.comment; let i = index">
+          <div class="card mb-3">
+            <div class="row g-0">
+              <div class="col-md-8">
+                <div class="card-body">
+                  <p class="card-text"> {{ commentaire.text }} </p><br />
+                  <p class="card-text"><small class="text-muted"><label><strong>Poster par:</strong></label>
+                      {{ commentaire.users_comment_id.nom }} {{ commentaire.users_comment_id.prenom }}</small></p>
+                  <button class="badge badge-danger mr-2"
+                    *ngIf="(isLoggedIn && commentaire.userId == userId) || isAdmin"
+                    (click)="deleteComment(commentaire.id)">
+                    Delete
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
-          <button class="badge badge-danger mr-2" *ngIf="(isLoggedIn && commentaire.userId == userId) || isAdmin"
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="submit-form">
+        <div *ngIf="!submitted">
+          <div class="form-group">
+
+            <h4>Ajouter un commentaire :</h4>
+            <input class="form-control" id="text" required [(ngModel)]="comment.text" name="text" />
+          </div>
+
+          <button (click)="saveComment()" class="btn btn-success">Submit</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="card mb-3" style="max-width: 540px;">
+  <div class="row g-0">
+    <div class="col-md-4">
+           <label><strong>Image:</strong></label>
+            <img [src]="imagePost">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <p class="card-text"> {{ commentaire.text }} </p><br />
+                  <p class="card-text"><small class="text-muted"><label><strong>Poster par:</strong></label>
+            {{ commentaire.users_comment_id.nom }} {{ commentaire.users_comment_id.prenom }}</small></p>
+            <button class="badge badge-danger mr-2" *ngIf="(isLoggedIn && commentaire.userId == userId) || isAdmin"
             (click)="deleteComment(commentaire.id)">
             Delete
-          </button>
-          <div>
-            <label><strong>Poster par:</strong></label>
-            {{ commentaire.users_comment_id.nom }} {{ commentaire.users_comment_id.prenom }}
-          </div>
-        </div>
+          </button>    
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
-<div class="submit-form">
-  <div *ngIf="!submitted">
-    <div class="form-group">
-
-      <h4>Ajouter un commentaire :</h4>
-      <input class="form-control" id="text" required [(ngModel)]="comment.text" name="text" />
+<!-- <div class="row" id="detail">
+  <div class="col-sm-4">
+    <div class="image">
+      <label><strong>Image:</strong></label>
+      <img [src]="imagePost">
     </div>
-
-    <button (click)="saveComment()" class="btn btn-success">Submit</button>
   </div>
+  <div class="col-sm-8 mr-auto">
+    <div class="col-sm-4 mr-auto" id="titre">
+      <label><strong>Title:</strong></label>
+      {{ currentArticle.title }}
+    </div>
+    <br />
+    <div class="col-sm-4 mr-auto" id="descriptiono">
+      <label><strong>Description:</strong></label><br />
+      {{ currentArticle.description }}
+    </div>
+  </div>
+</div> -->
 
+<!-- <div>
+  {{ commentaire.text }}
 </div>
+<button class="badge badge-danger mr-2" *ngIf="(isLoggedIn && commentaire.userId == userId) || isAdmin"
+  (click)="deleteComment(commentaire.id)">
+  Delete
+</button>
+<div>
+  <label><strong>Poster par:</strong></label>
+  {{ commentaire.users_comment_id.nom }} {{ commentaire.users_comment_id.prenom }}
+</div> -->

@@ -8,32 +8,15 @@ img{
     height: auto;
 }
 
-.col-sm-4{
-  border:2px solid black;
-  max-width: 100%;
-  height: auto;
-}
 
  .description {
   border:2px solid black;
 } 
 
-.col-md-6{
-  border:2px solid black;
-  max-width: 100%;
-  height: auto;
-}
-/* .infopost{
-  border:2px solid black;
-}
 
-#detail{
-  border:2px solid black;
+#article{
+  background-color: white;
 }
-
-#comment{
-  border:2px solid black;
-}*/
 
 .comments {
   border:2px solid black;

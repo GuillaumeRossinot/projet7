@@ -1,28 +1,82 @@
 <div class="container" *ngIf="currentUser; else loggedOut">
-    <header class="jumbotron">
+    <!-- <header>
         <h3>
-            Profile
+            Profile :
         </h3>
     </header>
-    <p>
-        <strong>Nom:</strong>
-        {{ currentUser.nom }}
-    </p>
-    <p>
-        <strong>Prenom:</strong>
-        {{ currentUser.prenom }}
-    </p>
-    <p>
-        <strong>Email:</strong>
-        {{ currentUser.email }}
-    </p>
-    <div *ngIf="isLoggedIn || isAdmin ||currentUser">
-        <button class="badge badge-danger mr-2" (click)="deleteUser()">
-            Delete
-        </button>
+    <div classe="col-md-8 ml-auto mr-auto" id="profile">
+        <p>
+            <strong>Nom:</strong>
+            {{ currentUser.nom }}
+        </p>
+        <p>
+            <strong>Prenom:</strong>
+            {{ currentUser.prenom }}
+        </p>
+        <p>
+            <strong>Email:</strong>
+            {{ currentUser.email }}
+        </p>
+        <div *ngIf="isLoggedIn || isAdmin ||currentUser">
+            <button class="badge badge-danger mr-2" (click)="deleteUser()">
+                Delete
+            </button>
+        </div>
+    </div> -->
+
+    <div class="col-md-12 ml-auto mr-auto">
+        <h4> Profile :</h4>
+        <div class="card mb-3">
+            <div class="row g0-">
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <p class="card-text"> <strong>Nom:</strong>
+                            {{ currentUser.nom }}</p><br />
+                        <p class="card-text"> <strong>Prenom:</strong>
+                            {{ currentUser.prenom }}</p><br />
+                        <p class="card-text"> <strong>Email:</strong>
+                            {{ currentUser.email }}</p><br />
+                        <div *ngIf="isLoggedIn || isAdmin ||currentUser">
+                            <button class="badge badge-danger mr-2" (click)="deleteUser()">
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
 <ng-template #loggedOut>
     Please login.
 </ng-template>
+
+
+<!--
+
+<div class="col-md-12 ml-auto mr-auto">
+    <h4> Profile :</h4>
+        <div class="card mb-3">
+          <div class="row g0-">
+            <div class="col-md-8">
+              <div class="card-body">
+                <p class="card-text"> <strong>Nom:</strong>
+            {{ currentUser.nom }}</p><br /></h5>
+                <p class="card-text">            <strong>Prenom:</strong>
+            {{ currentUser.prenom }}<br />
+                </p>
+                                <p class="card-text">            <strong>Email:</strong>
+            {{ currentUser.email }}<br />
+                </p>
+                        <div *ngIf="isLoggedIn || isAdmin ||currentUser">
+            <button class="badge badge-danger mr-2" (click)="deleteUser()">
+                Delete
+            </button>
+        </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>-->
