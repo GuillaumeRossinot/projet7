@@ -6,10 +6,10 @@ var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 
 exports.signup = (req, res) => {
-  console.log("nom :" + req.body.nom);
-  console.log("prenom :" + req.body.prenom);
-  console.log("email :" + req.body.email);
-  console.log("password :" + bcrypt.hashSync(req.body.password, 8));
+  //console.log("nom :" + req.body.nom);
+  //console.log("prenom :" + req.body.prenom);
+  //console.log("email :" + req.body.email);
+  //console.log("password :" + bcrypt.hashSync(req.body.password, 8));
   // Save User to Database
   User.create({
     nom: req.body.nom,
@@ -70,16 +70,16 @@ exports.signin = (req, res) => {
 };
 
 exports.getRealUser = (req, res, next) => {
-  console.log("test");
-  console.log("req " + req);
+  // console.log("test");
+  //console.log("req " + req);
 
   if (!token) {
     return res.status(403).send({
       message: "No token provided!"
     });
   }
-  console.log("token2 " + token);
-  console.log("config.secret " + config.secret);
+  // console.log("token2 " + token);
+  //console.log("config.secret " + config.secret);
   jwt.verify(token, config.secret, (err, decoded) => {
     if (err) {
       return res.status(401).send({
@@ -87,7 +87,7 @@ exports.getRealUser = (req, res, next) => {
       });
     }
     req.userId = decoded.id;
-    console.log("decoded.id " + decoded.id);
+    // console.log("decoded.id " + decoded.id);
     next();
   });
 };

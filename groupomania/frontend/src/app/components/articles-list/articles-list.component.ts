@@ -60,10 +60,10 @@ export class ArticlesListComponent implements OnInit {
           this.articles = posts;
           this.count = totalItems;
           this.articles.forEach(element => {
-            console.log("element.imageEncoded " + JSON.stringify(element.imageEncoded));
+            //  console.log("element.imageEncoded " + JSON.stringify(element.imageEncoded));
             element.imageEncoded2 = this.sanitizer.bypassSecurityTrustResourceUrl(`data:image/png;base64, ${element.imageEncoded}`);
           });
-          console.log(data);
+          // console.log(data);
         },
         error => {
           console.log(error);
@@ -111,7 +111,7 @@ export class ArticlesListComponent implements OnInit {
       .subscribe(
         data => {
           this.articles = data;
-          console.log(data);
+          //  console.log(data);
         },
         error => {
           console.log(error);

@@ -98,7 +98,7 @@ export class EditArticleComponent implements OnInit {
         data => {
           this.currentArticle = data;
           this.imagePost = this.sanitizer.bypassSecurityTrustResourceUrl(`data:image/png;base64, ${this.currentArticle.imageEncoded}`);
-          console.log(data);
+          //  console.log(data);
         },
         error => {
           console.log(error);
@@ -115,7 +115,7 @@ export class EditArticleComponent implements OnInit {
     this.ArticleService.update(this.currentArticle.id, this.currentArticle)
       .subscribe(
         response => {
-          console.log("response" + response);
+          //  console.log("response" + response);
           this.message = response.message ? response.message : 'This Article was updated successfully!';
           if (this.imageToUpdate) { this.upload(this.currentArticle.id); }
           this.redirectArticle();

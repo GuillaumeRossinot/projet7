@@ -5,7 +5,7 @@ module.exports = app => {
 
     var router = require("express").Router();
 
-    // Create a new Tutorial
+    // Create a new article
     router.post("/", [authJwt.verifyToken], comments.createComment);
 
     // Update un commentaire

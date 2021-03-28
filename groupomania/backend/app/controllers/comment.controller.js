@@ -28,7 +28,7 @@ exports.createComment = (req, res) => {
         });
 };
 
-// Update a Tutorial by the id in the request
+// Update a post by the id in the request
 exports.update = (req, res) => {
     const id = req.params.id;
 

@@ -32,11 +32,11 @@ exports.createPost = (req, res) => {
         });
         return;
     }
-    console.log("userId" + req.userId);
+    // console.log("userId" + req.userId);
 
 
     var fichierSplit = req.body.image.split("\\");
-    console.log("fichiersplit " + fichierSplit[fichierSplit.length - 1]);
+    // console.log("fichiersplit " + fichierSplit[fichierSplit.length - 1]);
 
     // Création de l'article
     const post = {
@@ -90,15 +90,15 @@ exports.findAll = (req, res) => {
 
 // Afficher un articles grâce a son ID
 exports.findOne = (req, res) => {
-    console.log("userId " + req.userId);
+    // console.log("userId " + req.userId);
     let token = req.headers["x-access-token"];
-    console.log("token " + token);
+    // console.log("token " + token);
     const id = req.params.id;
 
 
     Post.findByPk(id, { include: [{ all: true, nested: true }] })
         .then(data => {
-            console.log("comment " + data.userId);
+            //  console.log("comment " + data.userId);
             const profilePicture = Buffer.from(data.imageEncoded).toString('base64');
             data.imageEncoded = profilePicture;
             res.send(data);
@@ -151,7 +151,7 @@ exports.delete = (req, res) => {
 
                 fs.unlink(fileName, (err) => {
                     if (err) {
-                        console.error(err)
+                        //  console.error(err)
                         return
                     }
 

@@ -87,8 +87,8 @@ export class AddArticleComponent implements OnInit {
     this.articleService.create(data)
       .subscribe(
         response => {
-          console.log(response);
-          console.log("id" + response.id);
+          //  console.log(response);
+          //  console.log("id" + response.id);
           this.submitted = true;
           this.upload(response.id);
           this.redirectArticle();

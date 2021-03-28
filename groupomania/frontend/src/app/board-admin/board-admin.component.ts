@@ -70,7 +70,7 @@ export class BoardAdminComponent implements AfterViewInit {
         response => {
           this.userTab = this.convertAllUsertoUserTab(response);
           this.dataSource = new MatTableDataSource<PeriodicElement>(this.userTab);
-          console.log(response);
+          // console.log(response);
         },
         error => {
           console.log(error);

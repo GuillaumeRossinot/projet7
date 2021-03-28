@@ -5,7 +5,6 @@ const User = db.users;
 
 verifyToken = (req, res, next) => {
     console.log("verifytoken");
-    //req.headers.get();
     var token = (req.body && req.body.access_token) || (req.query && req.query.access_token) || req.headers['x-access-token'];
     console.log("token " + token);
 

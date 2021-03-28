@@ -6,9 +6,8 @@ module.exports = app => {
 
     var router = require("express").Router();
 
-    // Create a new Tutorial
+    // Create a new post
     router.post("/", [authJwt.verifyToken], post.createPost);
-    //router.post("/comment", tutorials.createComment);
 
     // Afficher tout les articles
     router.get("/", post.findAll);
@@ -22,7 +21,7 @@ module.exports = app => {
     // Supprimer un article grâce a son ID
     router.delete("/:id", [authJwt.verifyToken], post.delete);
 
-    // Delete all Tutorials
+    // Delete all post
     router.delete("/", [authJwt.verifyToken], post.deleteAll);
 
     app.use('/api/post', router);

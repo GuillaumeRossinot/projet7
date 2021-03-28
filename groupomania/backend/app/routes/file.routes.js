@@ -8,7 +8,6 @@ module.exports = app => {
     router.post("/upload", controller.upload);
     router.get("/files", controller.getListFiles);
     router.get("/files/:name", controller.download);
-    //router.get("/post/files/:id", controller.downloadPostImage);
 
     app.use('/api', router);
 };
