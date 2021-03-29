@@ -95,7 +95,6 @@ exports.getAllUsers = (req, res) => {
 
     User.findAll(id)
         .then(data => {
-            console.log("data " + data);
             res.send(data);
         })
         .catch(err => {

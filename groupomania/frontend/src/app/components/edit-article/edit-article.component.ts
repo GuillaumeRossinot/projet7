@@ -29,6 +29,8 @@ export class EditArticleComponent implements OnInit {
   imagePost: any;
   fileInfos?: Observable<any>;
   imageToUpdate = false;
+  err = '';
+  error = '';
 
   constructor(
     private ArticleService: ArticleService,
@@ -74,7 +76,7 @@ export class EditArticleComponent implements OnInit {
             }
           },
           (err: any) => {
-            console.log(err);
+            this.err = err;
             this.progress = 0;
 
             if (err.error && err.error.message) {
@@ -100,7 +102,7 @@ export class EditArticleComponent implements OnInit {
           this.imagePost = this.sanitizer.bypassSecurityTrustResourceUrl(`data:image/png;base64, ${this.currentArticle.imageEncoded}`);
         },
         error => {
-          console.log(error);
+          this.error = error;
         });
   }
 
@@ -118,7 +120,7 @@ export class EditArticleComponent implements OnInit {
           this.redirectArticle();
         },
         error => {
-          console.log(error);
+          this.error = error;
         });
   }
 
@@ -129,7 +131,7 @@ export class EditArticleComponent implements OnInit {
           this.router.navigate(['/post']);
         },
         error => {
-          console.log(error);
+          this.error = error;
         });
   }
 

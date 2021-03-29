@@ -18,6 +18,8 @@ export class AddArticleComponent implements OnInit {
     image: ''
   };
   submitted = false;
+  err = '';
+  error = '';
 
   selectedFiles?: FileList;
   currentFile?: File;
@@ -59,7 +61,7 @@ export class AddArticleComponent implements OnInit {
             }
           },
           (err: any) => {
-            console.log(err);
+            this.err = err;
             this.progress = 0;
 
             if (err.error && err.error.message) {
@@ -92,7 +94,7 @@ export class AddArticleComponent implements OnInit {
           this.redirectArticle();
         },
         error => {
-          console.log(error);
+          this.error = error;
         });
   }
 

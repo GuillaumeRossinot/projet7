@@ -30,6 +30,7 @@ export class ArticleDetailsComponent implements OnInit {
     text: ''
   };
   submitted = false;
+  error = '';
 
 
   constructor(
@@ -59,7 +60,7 @@ export class ArticleDetailsComponent implements OnInit {
           this.imagePost = this.sanitizer.bypassSecurityTrustResourceUrl(`data:image/png;base64, ${this.currentArticle.imageEncoded}`);
         },
         error => {
-          console.log(error);
+          this.error = error;
         });
   }
 
@@ -70,7 +71,7 @@ export class ArticleDetailsComponent implements OnInit {
           this.router.navigate(['/post']);
         },
         error => {
-          console.log(error);
+          this.error = error;
         });
   }
 
@@ -87,7 +88,7 @@ export class ArticleDetailsComponent implements OnInit {
           this.redirectArticle();
         },
         error => {
-          console.log(error);
+          this.error = error;
         });
   }
 
@@ -95,11 +96,10 @@ export class ArticleDetailsComponent implements OnInit {
     this.ArticleService.deleteComment(commentId)
       .subscribe(
         response => {
-          console.log(response);
           this.redirectArticle();
         },
         error => {
-          console.log(error);
+          this.error = error;
         });
   }
 

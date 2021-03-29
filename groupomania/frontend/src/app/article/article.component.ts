@@ -12,6 +12,7 @@ export class ArticleComponent implements OnInit {
   currentArticle?: Article;
   currentIndex = -1;
   title = '';
+  error = '';
 
   page = 1;
   count = 0;
@@ -50,7 +51,7 @@ export class ArticleComponent implements OnInit {
           this.articles = data;
         },
         error => {
-          console.log(error);
+          this.error = error;
         });
   }
 
@@ -65,16 +66,6 @@ export class ArticleComponent implements OnInit {
     this.currentIndex = index;
   }
 
-  removeAllArticles(): void {
-    this.articleService.deleteAll()
-      .subscribe(
-        response => {
-          this.refreshList();
-        },
-        error => {
-          console.log(error);
-        });
-  }
 
   searchTitle(): void {
     this.currentArticle = undefined;
@@ -86,7 +77,7 @@ export class ArticleComponent implements OnInit {
           this.articles = data;
         },
         error => {
-          console.log(error);
+          this.error = error;
         });
   }
 

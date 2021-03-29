@@ -47,7 +47,6 @@ export class ArticleService {
   }
 
   getImage(id: any): Observable<Article> {
-    console.log(`${baseUrl}/files/${id}`);
     return this.http.get(`${baseUrl}/files/${id}`);
   }
 

@@ -16,7 +16,9 @@ const upload = async (req, res) => {
             { where: { id: req.body.idPost } }
         )
             .catch(err =>
-                console.log(err)
+                res.status(500).send({
+                    message: err
+                })
             );
 
         if (req.file == undefined) {

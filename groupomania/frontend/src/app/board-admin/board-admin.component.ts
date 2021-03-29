@@ -21,6 +21,7 @@ export class BoardAdminComponent implements AfterViewInit {
   dataSource = new MatTableDataSource<PeriodicElement>();
   isLoggedIn = false;
   isAdmin = false;
+  error = '';
   currentUser: User = {
     id: 0
   };
@@ -72,7 +73,7 @@ export class BoardAdminComponent implements AfterViewInit {
           this.dataSource = new MatTableDataSource<PeriodicElement>(this.userTab);
         },
         error => {
-          console.log(error);
+          this.error = error;
         });
   }
 
@@ -83,7 +84,7 @@ export class BoardAdminComponent implements AfterViewInit {
           this.redirectAdmin();
         },
         error => {
-          console.log(error);
+          this.error = error;
         });
   }
 

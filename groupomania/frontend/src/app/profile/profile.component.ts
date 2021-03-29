@@ -19,6 +19,7 @@ export class ProfileComponent implements OnInit {
     email: '',
     password: ''
   };
+  error = '';
 
   constructor(
     private userService: UserService,
@@ -42,11 +43,10 @@ export class ProfileComponent implements OnInit {
     this.userService.deleteUser(this.currentUser.id)
       .subscribe(
         response => {
-          console.log(response);
           this.logout();
         },
         error => {
-          console.log(error);
+          this.error = error;
         });
   }
 

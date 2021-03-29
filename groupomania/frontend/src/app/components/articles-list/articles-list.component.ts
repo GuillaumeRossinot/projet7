@@ -15,6 +15,7 @@ export class ArticlesListComponent implements OnInit {
   currentIndex = -1;
   title = '';
   imagePost: any;
+  error = '';
 
   page = 1;
   count = 0;
@@ -62,7 +63,7 @@ export class ArticlesListComponent implements OnInit {
           });
         },
         error => {
-          console.log(error);
+          this.error = error;
         });
   }
 
@@ -87,18 +88,6 @@ export class ArticlesListComponent implements OnInit {
     window.location.href = '/post/' + index;
   }
 
-  removeAllArticles(): void {
-    this.articleService.deleteAll()
-      .subscribe(
-        response => {
-          console.log(response);
-          this.refreshList();
-        },
-        error => {
-          console.log(error);
-        });
-  }
-
   searchTitle(): void {
     this.currentArticle = undefined;
     this.currentIndex = -1;
@@ -109,7 +98,7 @@ export class ArticlesListComponent implements OnInit {
           this.articles = data;
         },
         error => {
-          console.log(error);
+          this.error = error;
         });
   }
 
