@@ -30,7 +30,6 @@ export class ArticlesListComponent implements OnInit {
   }
 
   getRequestParams(searchTitle: string, page: number, pageSize: number): any {
-    // tslint:disable-next-line:prefer-const
     let params: any = {};
 
     if (searchTitle) {
@@ -51,7 +50,6 @@ export class ArticlesListComponent implements OnInit {
 
   retrieveArticles(): void {
     const params = this.getRequestParams(this.title, this.page, this.pageSize);
-    //console.log("this.getRequestParams(this.title) " + JSON.stringify(this.getRequestParams(this.title, this.page, this.pageSize)));
 
     this.articleService.getAll(params)
       .subscribe(
@@ -60,10 +58,8 @@ export class ArticlesListComponent implements OnInit {
           this.articles = posts;
           this.count = totalItems;
           this.articles.forEach(element => {
-            //  console.log("element.imageEncoded " + JSON.stringify(element.imageEncoded));
             element.imageEncoded2 = this.sanitizer.bypassSecurityTrustResourceUrl(`data:image/png;base64, ${element.imageEncoded}`);
           });
-          // console.log(data);
         },
         error => {
           console.log(error);
@@ -111,7 +107,6 @@ export class ArticlesListComponent implements OnInit {
       .subscribe(
         data => {
           this.articles = data;
-          //  console.log(data);
         },
         error => {
           console.log(error);

@@ -70,7 +70,6 @@ export class BoardAdminComponent implements AfterViewInit {
         response => {
           this.userTab = this.convertAllUsertoUserTab(response);
           this.dataSource = new MatTableDataSource<PeriodicElement>(this.userTab);
-          // console.log(response);
         },
         error => {
           console.log(error);
@@ -81,7 +80,6 @@ export class BoardAdminComponent implements AfterViewInit {
     this.userService.deleteUser(idUser)
       .subscribe(
         response => {
-          console.log(response);
           this.redirectAdmin();
         },
         error => {

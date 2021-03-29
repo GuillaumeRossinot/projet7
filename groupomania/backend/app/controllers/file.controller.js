@@ -8,16 +8,9 @@ const Post = db.post;
 const upload = async (req, res) => {
     try {
         await uploadFile(req, res);
-        //console.log("idPostctrl " + req.body.idPost);
-
-        //console.log(req.file.originalname);
-
         var fichierSplit = req.file.originalname.split("\\");
-        //console.log("fichiersplit2 " + fichierSplit[fichierSplit.length - 1]);
-        //console.log("directoryPath + req.body.idPost + " - " + fichierSplit[fichierSplit.length - 1]" + directoryPath + req.body.idPost + "-" + fichierSplit[fichierSplit.length - 1]);
         var bitmap = fs.readFileSync(directoryPath + req.body.idPost + "-image");
 
-        //console.log("update");
         Post.update(
             { imageEncoded: bitmap },
             { where: { id: req.body.idPost } }
@@ -44,7 +37,6 @@ const getListFiles = (req, res) => {
     const directoryPath = __basedir + "/resources/static/assets/uploads/";
 
     fs.readdir(directoryPath, function (err, files) {
-        //console.log(files);
         if (err) {
             res.status(500).send({
                 message: "Unable to scan files!",

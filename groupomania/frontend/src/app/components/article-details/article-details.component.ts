@@ -43,7 +43,6 @@ export class ArticleDetailsComponent implements OnInit {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
     this.userId = this.tokenStorageService.getUser().id;
     this.isAdmin = this.tokenStorageService.getUser().isAdmin;
-    //  console.log("this.isAdmin = this.tokenStorageService.getUser().isAdmin; " + this.tokenStorageService.getUser().isAdmin);
     this.message = '';
     this.getArticle(this.route.snapshot.params.id);
   }
@@ -53,15 +52,11 @@ export class ArticleDetailsComponent implements OnInit {
   }
 
   getArticle(id: string): void {
-    console.log("içi");
     this.ArticleService.get(id)
       .subscribe(
         data => {
           this.currentArticle = data;
-          //  console.log("this.currentArticle " + JSON.stringify(this.currentArticle));
-          //  console.log(data);
           this.imagePost = this.sanitizer.bypassSecurityTrustResourceUrl(`data:image/png;base64, ${this.currentArticle.imageEncoded}`);
-          //  console.log("imagePost" + this.imagePost);
         },
         error => {
           console.log(error);
@@ -72,7 +67,6 @@ export class ArticleDetailsComponent implements OnInit {
     this.ArticleService.delete(this.currentArticle.id)
       .subscribe(
         response => {
-          console.log(response);
           this.router.navigate(['/post']);
         },
         error => {
@@ -89,8 +83,6 @@ export class ArticleDetailsComponent implements OnInit {
     this.ArticleService.createComment(data)
       .subscribe(
         response => {
-          console.log(response);
-          //  console.log("id" + response.id);
           this.submitted = true;
           this.redirectArticle();
         },

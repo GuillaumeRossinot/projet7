@@ -25,7 +25,6 @@ export class ArticleComponent implements OnInit {
   }
 
   getRequestParams(searchTitle: string, page: number, pageSize: number): any {
-    // tslint:disable-next-line:prefer-const
     let params: any = {};
 
     if (searchTitle) {
@@ -45,13 +44,10 @@ export class ArticleComponent implements OnInit {
 
   retrieveArticles(): void {
     const params = this.getRequestParams(this.title, this.page, this.pageSize);
-    // console.log("içi");
-    debugger;
     this.articleService.getAll(params)
       .subscribe(
         data => {
           this.articles = data;
-          // console.log(data);
         },
         error => {
           console.log(error);
@@ -73,7 +69,6 @@ export class ArticleComponent implements OnInit {
     this.articleService.deleteAll()
       .subscribe(
         response => {
-          //  console.log(response);
           this.refreshList();
         },
         error => {
@@ -89,7 +84,6 @@ export class ArticleComponent implements OnInit {
       .subscribe(
         data => {
           this.articles = data;
-          // console.log(data);
         },
         error => {
           console.log(error);
